@@ -10,14 +10,18 @@ module Tarpon
         content_type: 'application/json'
       }.freeze
 
+      def initialize(config:)
+        @config = config
+      end
+
       protected
 
       def perform(method:, path:, key:, headers: {}, body: nil)
         HTTP
-          .timeout(Client.timeout)
+          .timeout(get_config(:timeout))
           .auth("Bearer #{api_key(key)}")
           .headers(headers.merge(DEFAULT_HEADERS))
-          .send(method, "#{Client.base_uri}#{path}", json: body&.compact)
+          .send(method, "#{get_config(:base_uri)}#{path}", json: body&.compact)
           .yield_self { |http_response| handle_response(http_response) }
       rescue HTTP::TimeoutError => e
         raise Tarpon::TimeoutError, e
@@ -26,7 +30,15 @@ module Tarpon
       private
 
       def api_key(type)
-        Client.send("#{type}_api_key")
+        get_config("#{type}_api_key".to_sym)
+      end
+
+      def get_config(key)
+        config[key] || Client.send(key)
+      end
+
+      def config
+        @config ||= {}
       end
 
       def parse_body(http_response)

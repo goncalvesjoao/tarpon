@@ -6,7 +6,8 @@ module Tarpon
   module Request
     class Subscriber
       class Offering < Base
-        def initialize(subscriber_path:)
+        def initialize(subscriber_path:, config:)
+          super(config: config)
           @subscriber_path = subscriber_path
         end
 

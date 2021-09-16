@@ -4,7 +4,8 @@ module Tarpon
   module Request
     class Subscriber
       class Entitlement < Base
-        def initialize(subscriber_path:, entitlement_identifier:)
+        def initialize(subscriber_path:, entitlement_identifier:, config:)
+          super(config: config)
           @subscriber_path = subscriber_path
           @entitlement_identifier = entitlement_identifier
         end

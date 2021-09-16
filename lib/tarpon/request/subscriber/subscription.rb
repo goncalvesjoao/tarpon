@@ -4,7 +4,8 @@ module Tarpon
   module Request
     class Subscriber
       class Subscription < Base
-        def initialize(subscriber_path:, product_id:)
+        def initialize(subscriber_path:, product_id:, config:)
+          super(config: config)
           @subscriber_path = subscriber_path
           @product_id = product_id
         end

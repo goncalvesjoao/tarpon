@@ -3,7 +3,8 @@
 module Tarpon
   module Request
     class Subscriber < Base
-      def initialize(app_user_id:)
+      def initialize(app_user_id:, config:)
+        super(config: config)
         @app_user_id = app_user_id
       end
 
@@ -18,15 +19,15 @@ module Tarpon
       end
 
       def entitlements(entitlement_identifier)
-        self.class::Entitlement.new(subscriber_path: path, entitlement_identifier: entitlement_identifier)
+        self.class::Entitlement.new(subscriber_path: path, entitlement_identifier: entitlement_identifier, config: config)
       end
 
       def offerings
-        self.class::Offering.new(subscriber_path: path)
+        self.class::Offering.new(subscriber_path: path, config: config)
       end
 
       def subscriptions(product_id)
-        self.class::Subscription.new(subscriber_path: path, product_id: product_id)
+        self.class::Subscription.new(subscriber_path: path, product_id: product_id, config: config)
       end
 
       private

@@ -7,12 +7,12 @@ module Tarpon
     extend Configuration
 
     class << self
-      def subscriber(app_user_id)
-        Request::Subscriber.new(app_user_id: app_user_id)
+      def subscriber(app_user_id, config = {})
+        Request::Subscriber.new(app_user_id: app_user_id, config: config)
       end
 
-      def receipt
-        Request::Receipt.new
+      def receipt(config = {})
+        Request::Receipt.new(config: config)
       end
     end
   end

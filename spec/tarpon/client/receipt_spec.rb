@@ -22,5 +22,27 @@ RSpec.describe Tarpon::Client do
         let(:client_call) { [:create, platform: platform, **body] }
       end
     end
+
+    context 'when Client configuration is set' do
+      let(:public_api_key) { '666' }
+      let(:secret_api_key) { '777' }
+      let(:custom_public_api_key) { '999' }
+
+      subject { described_class.receipt({ public_api_key: custom_public_api_key }) }
+
+      before do
+        Tarpon::Client.public_api_key = public_api_key
+        Tarpon::Client.secret_api_key = secret_api_key
+      end
+      after do
+        Tarpon::Client.public_api_key = nil
+        Tarpon::Client.secret_api_key = nil
+      end
+
+      it 'allows to overwrite Client configuration' do
+        expect(subject.send(:get_config, :public_api_key)).to eq custom_public_api_key
+        expect(subject.send(:get_config, :secret_api_key)).to eq secret_api_key
+      end
+    end
   end
 end
