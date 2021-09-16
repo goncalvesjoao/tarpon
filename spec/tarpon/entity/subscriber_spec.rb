@@ -30,4 +30,18 @@ RSpec.describe Tarpon::Entity::Subscriber do
       expect(subject.entitlements).to eq entitlements_list
     end
   end
+
+  describe '#subscriptions' do
+    let(:subscriptions_list) { double('Tarpon::Entity::SubscriptionList') }
+
+    before do
+      expect(Tarpon::Entity::SubscriptionList).to receive(:new)
+        .with(attributes[:subscriptions])
+        .and_return(subscriptions_list)
+    end
+
+    it 'returns an instance of SubscriptionList' do
+      expect(subject.subscriptions).to eq subscriptions_list
+    end
+  end
 end

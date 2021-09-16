@@ -2,23 +2,21 @@
 
 module Tarpon
   module Entity
-    class EntitlementList
+    class SubscriptionList
       include Enumerable
 
-      def initialize(entitlements = {})
-        @entitlements = entitlements.map { |id, params| Entitlement.new(id, params) }
+      def initialize(subscriptions = nil)
+        subscriptions ||= {}
+
+        @subscriptions = subscriptions.map { |id, params| Subscription.new(id, params) }
       end
 
       def [](index)
-        @entitlements[index]
+        @subscriptions[index]
       end
 
       def active
-        @entitlements.select(&:active?)
-      end
-
-      def each
-        @entitlements.each { |e| yield e }
+        @subscriptions.select(&:active?)
       end
 
       def most_recent_active
@@ -31,6 +29,10 @@ module Tarpon
         end
 
         most_recent
+      end
+
+      def each
+        @subscriptions.each { |e| yield e }
       end
     end
   end

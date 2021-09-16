@@ -2,7 +2,7 @@
 
 module Tarpon
   module Entity
-    class Entitlement
+    class Subscription
       attr_reader :id, :raw
 
       def initialize(id, attributes = {})
@@ -16,10 +16,6 @@ module Tarpon
 
       def expires_date
         Time.iso8601(@raw[:expires_date])
-      end
-
-      def product_identifier
-        @raw[:product_identifier]
       end
 
       def purchase_date

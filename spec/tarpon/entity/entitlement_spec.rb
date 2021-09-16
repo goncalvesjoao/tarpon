@@ -47,4 +47,16 @@ RSpec.describe Tarpon::Entity::Entitlement do
       expect(subject.expires_date).to eq Time.iso8601(attributes[:expires_date])
     end
   end
+
+  describe '#product_identifier' do
+    it 'equals attributes[:product_identifier]' do
+      expect(subject.product_identifier).to eq attributes[:product_identifier]
+    end
+  end
+
+  describe '#purchase_date' do
+    it 'parses the iso8601 purchase_date' do
+      expect(subject.purchase_date).to eq Time.iso8601(attributes[:purchase_date])
+    end
+  end
 end
