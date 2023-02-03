@@ -10,6 +10,10 @@ module Tarpon
         @raw = attributes
       end
 
+      def attributes
+        { id: id, raw: raw }.with_indifferent_access
+      end
+
       def active?
         expires_date > Time.now.utc
       end
